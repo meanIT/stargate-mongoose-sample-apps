@@ -6,7 +6,12 @@ const webpack = require('webpack');
 
 try {
   fs.mkdirSync(path.join(__dirname, '..', 'public', 'vanillatoasts'));
-} catch (err) {}
+} catch (err) {
+  // Directory might already exist, which is fine
+  if (err.code !== 'EEXIST') {
+    console.error('Error creating vanillatoasts directory:', err);
+  }
+}
 
 fs.copyFileSync(
   path.join(__dirname, '..', 'node_modules', 'vanillatoasts', 'vanillatoasts.css'),

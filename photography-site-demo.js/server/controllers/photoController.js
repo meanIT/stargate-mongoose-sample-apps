@@ -27,7 +27,7 @@ exports.searchByPhotoDescriptionByVSearch = async(req, res) => {
     }
     res.render('similaritySearch', { title: 'photography site - SimilaritySearch', photo, searchTerm });
   } catch (error) {
-    res.status(500).send({ message: error.message || 'Error Occured' });
+    res.status(500).send({ message: error.message || 'Error Occurred' });
   }
 };
 
@@ -130,7 +130,7 @@ exports.homepage = async(req, res) => {
     const photos = { animals, streets, landscapes };
     res.render('home', { title: 'photography site - Home', categories, photos });
   } catch (error) {
-    res.status(500).send({ message: error.message || 'Error Occured' });
+    res.status(500).send({ message: error.message || 'Error Occurred' });
   }
 };
 
@@ -142,7 +142,7 @@ exports.contactPage = async(req, res) => {
   try {
     res.render('contact', { title: 'photography site - Contact' });
   } catch (error) {
-    res.status(500).send({ message: error.message || 'Error Occured' });
+    res.status(500).send({ message: error.message || 'Error Occurred' });
   }
 };
 
@@ -172,7 +172,7 @@ exports.exploreCategoriesByName = async(req, res) => {
     const photosOfCategory = await Photo.find({ category: categoryName }).limit(limitNumber);
     res.render('categories', { title: 'photography site  - photos in category', photosOfCategory, categoryName });
   } catch (error) {
-    res.status(500).send({ message: error.message || 'Error Occured' });
+    res.status(500).send({ message: error.message || 'Error Occurred' });
   }
 };
 
@@ -185,7 +185,7 @@ exports.explorePhoto = async(req, res) => {
     const photo = await Photo.findById(photoId);
     res.render('photo', { title: 'photography site - Photo', photo });
   } catch (error) {
-    res.status(500).send({ message: error.message || 'Error Occured' });
+    res.status(500).send({ message: error.message || 'Error Occurred' });
   }
 };
 
@@ -196,7 +196,7 @@ exports.explorePhotoEmbedding = async(req, res) => {
     const photo = await PhotoEmbedding.findById(photoEmbeddingId);
     res.render('photo', { title: 'photography site - Photo', photo });
   } catch (error) {
-    res.status(500).send({ message: error.message || 'Error Occured' });
+    res.status(500).send({ message: error.message || 'Error Occurred' });
   }
 };
 
@@ -210,7 +210,7 @@ exports.searchPhotoByNameExact = async(req, res) => {
     const photo = await Photo.find({ name: { $eq: searchTerm } });
     res.render('search', { title: 'photography site - Search', photo, searchTerm });
   } catch (error) {
-    res.status(500).send({ message: error.message || 'Error Occured' });
+    res.status(500).send({ message: error.message || 'Error Occurred' });
   }
 };
 
@@ -225,7 +225,7 @@ exports.exploreLatest = async(req, res) => {
     const photo = await Photo.find({}).sort({ _id: -1 }).limit(limitNumber);
     res.render('explore-latest', { title: 'photography site - Explore Latest', photo });
   } catch (error) {
-    res.status(500).send({ message: error.message || 'Error Occured' });
+    res.status(500).send({ message: error.message || 'Error Occurred' });
   }
 };
 
@@ -240,7 +240,7 @@ exports.exploreRandom = async(req, res) => {
     const photo = await Photo.findOne().skip(random).exec();
     res.render('explore-random', { title: 'photography site - Explore random', photo });
   } catch (error) {
-    res.status(500).send({ message: error.message || 'Error Occured' });
+    res.status(500).send({ message: error.message || 'Error Occurred' });
   }
 };
 

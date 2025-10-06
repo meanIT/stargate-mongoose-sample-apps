@@ -40,26 +40,19 @@ schema.pre('save', async function updateVehicleRating() {
     return;
   }
   const vehicle = await mongoose.model('Vehicle').findById(this.vehicleId).orFail();
-  vehicle.numReviews += 1;
-  const vehicleReviews = await mongoose.model('Review').find({ vehicleId: this.vehicleId });
-  const reviewRatings = vehicleReviews.map((entry) => entry.rating);
-  reviewRatings.push(this.rating);
-  const average = calculateAverage(reviewRatings);
-  vehicle.averageReview = average;
+  
+  // Use incremental average calculation instead of fetching all reviews
+  const currentAverage = vehicle.averageReview || 0;
+  const currentCount = vehicle.numReviews || 0;
+  
+  // Calculate new average incrementally: new_avg = (old_avg * old_count + new_rating) / new_count
+  const newCount = currentCount + 1;
+  const newAverage = (currentAverage * currentCount + this.rating) / newCount;
+  
+  vehicle.numReviews = newCount;
+  vehicle.averageReview = newAverage;
   await vehicle.save();
 });
-
-function calculateAverage(ratings: number[]) {
-  if (ratings.length === 0) {
-    return 0;
-  }
-  let sum = 0;
-  for (let i = 0; i < ratings.length; i++) {
-    sum += ratings[i];
-  }
-  const average = sum / ratings.length;
-  return average;
-}
 
 const Review = mongoose.model('Review', schema);
 

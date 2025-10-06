@@ -5,11 +5,11 @@ import bcrypt from 'bcryptjs';
 
 async function register(request: Request, response: Response): Promise<void> {
   if (!request.body) {
-    response.status(500).json({ error: 'No body was sent' });
+    response.status(400).json({ error: 'No body was sent' });
     return;
   }
-  if (request.body.password.length < 6) {
-    response.status(500).json({ error: 'password is too short' });
+  if (!request.body.password || request.body.password.length < 6) {
+    response.status(400).json({ error: 'password is too short' });
     return;
   }
 
@@ -19,8 +19,8 @@ async function register(request: Request, response: Response): Promise<void> {
     email: request.body.email
   });
 
-  const salt = bcrypt.genSaltSync(10);
-  const hash = bcrypt.hashSync(request.body.password, salt);
+  const salt = await bcrypt.genSalt(10);
+  const hash = await bcrypt.hash(request.body.password, salt);
   await Authentication.create({
     type: 'password',
     userId: user._id,
