@@ -2,5 +2,12 @@
   "name": "stargate-mongoose-sample-apps",
   "private": true,
   "version": "0.0.0",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "lint": "npm run lint --prefix netlify-functions-ecommerce && npm run lint --prefix discord-bot",
+    "test:all": "npm test --prefix netlify-functions-ecommerce && npm test --prefix discord-bot && npm test --prefix typescript-express-reviews && npm test --prefix photography-site-demo.js"
+  },
+  "engines": {
+    "node": ">=20.6.0"
+  }
 }
