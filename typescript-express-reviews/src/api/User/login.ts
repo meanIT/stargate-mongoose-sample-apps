@@ -8,7 +8,7 @@ async function login(request: Request, response: Response): Promise<void> {
     .findOne({ email: request.body.email })
     .setOptions({ sanitizeFilter: true });
   if (user == null) {
-    response.status(404).json({ error: 'user not found' });
+    response.status(401).json({ error: 'user not found' });
     return;
   }
   if (request.body.password == null) {
@@ -21,7 +21,7 @@ async function login(request: Request, response: Response): Promise<void> {
     userId: user._id
   });
   if (authentication == null) {
-    response.status(404).json({
+    response.status(401).json({
       error: 'This account does not have a password set'
     });
     return;
@@ -31,7 +31,7 @@ async function login(request: Request, response: Response): Promise<void> {
     authentication.secret as string
   );
   if (!matches) {
-    response.status(500).json({ error: 'Login Failed' });
+    response.status(401).json({ error: 'Login Failed' });
     return;
   }
 
